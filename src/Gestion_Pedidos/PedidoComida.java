@@ -4,18 +4,21 @@ public class PedidoComida extends Pedido {
 
     private boolean mochilaTermica;
 
-    public PedidoComida(int idPedido, String direccionEntrega, boolean mochilaTermica) {
-        super(idPedido, direccionEntrega, "Pedido Comida");
+    public PedidoComida(int idPedido, String direccionEntrega, double distanciaKm, boolean mochilaTermica) {
+        super(idPedido, direccionEntrega, distanciaKm, "Pedido Comida");
         this.mochilaTermica = mochilaTermica;
     }
 
-    // Sobreescritura: lógica propia para pedidos de comida
+    @Override
+    public int calcularTiempoEntrega() {
+        return (int) Math.round(15 + 2 * distanciaKm);
+    }
+
     @Override
     public void asignarRepartidor() {
         super.asignarRepartidor();
     }
 
-    // Sobrecarga: incluye validación propia del tipo de pedido (mochila térmica)
     @Override
     public void asignarRepartidor(String nombreRepartidor) {
         if (mochilaTermica) {

@@ -2,22 +2,30 @@ package Gestion_Pedidos;
 
 public class PedidoExpress extends Pedido {
 
-    private double distanciaKm;
     private boolean disponibilidadInmediata;
 
     public PedidoExpress(int idPedido, String direccionEntrega, double distanciaKm, boolean disponibilidadInmediata) {
-        super(idPedido, direccionEntrega, "Pedido Express");
-        this.distanciaKm = distanciaKm;
+        super(idPedido, direccionEntrega, distanciaKm, "Pedido Express");
         this.disponibilidadInmediata = disponibilidadInmediata;
     }
 
-    // Sobreescritura: se asigna al repartidor más cercano con disponibilidad inmediata
+    // Tiempo = 10 min base; si la distancia es mayor a 5 km, se agregan 5 min extra
+    @Override
+    public int calcularTiempoEntrega() {
+        int tiempo = 10;
+        if (distanciaKm > 5) {
+            tiempo += 5;
+        }
+        return tiempo;
+    }
+
+
     @Override
     public void asignarRepartidor() {
         super.asignarRepartidor();
     }
 
-    // Sobrecarga: incluye validación propia del tipo de pedido (cercanía/disponibilidad)
+
     @Override
     public void asignarRepartidor(String nombreRepartidor) {
         if (disponibilidadInmediata) {

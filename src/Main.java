@@ -1,3 +1,4 @@
+import Gestion_Pedidos.Pedido;
 import Gestion_Pedidos.PedidoComida;
 import Gestion_Pedidos.PedidoEncomienda;
 import Gestion_Pedidos.PedidoExpress;
@@ -5,35 +6,28 @@ import Gestion_Pedidos.PedidoExpress;
 public class Main {
     public static void main(String[] args) {
 
-        PedidoComida pedidoComida = new PedidoComida(1, "Av. Siempre Viva 123", true);
-        PedidoEncomienda pedidoEncomienda = new PedidoEncomienda(2, "Calle Los Aromos 456", 12.5, true);
-        PedidoExpress pedidoExpress = new PedidoExpress(3, "Pasaje Las Rosas 789", 1.8, true);
+        // Semana 2: clase abstracta Pedido, mostrarResumen() y calcularTiempoEntrega()
+        Pedido[] pedidos = {
+                new PedidoComida(1, "Av. Italia 456", 4, true),
+                new PedidoEncomienda(2, "Av. Independencia 123", 6, 8.5, true),
+                new PedidoExpress(3, "Av. Apoquindo 1500", 7, true)
+        };
 
-        pedidoComida.asignarRepartidor();                 // versión sobrescrita
-        pedidoComida.asignarRepartidor("Juan Pérez");      // versión sobrecargada
-        System.out.println();
+        for (Pedido pedido : pedidos) {
+            pedido.mostrarResumen();
+            System.out.println("Tiempo estimado de entrega: " + pedido.calcularTiempoEntrega() + " minutos");
+            System.out.println();
+        }
 
-        pedidoEncomienda.asignarRepartidor();
-        pedidoEncomienda.asignarRepartidor("Camila Soto");
-        System.out.println();
+        // Semana 1: sobrecarga y sobreescritura de asignarRepartidor() 
+        System.out.println("=== Asignación de repartidores ===\n");
 
-        pedidoExpress.asignarRepartidor();
-        pedidoExpress.asignarRepartidor("Luis Díaz");
-        System.out.println();
+        String[] repartidores = {"Juan Pérez", "Camila Soto", "Luis Díaz"};
 
-        // Casos con validación fallida, para demostrar el comportamiento diferenciado
-        PedidoComida pedidoComidaSinMochila = new PedidoComida(4, "Calle El Sol 321", false);
-        pedidoComidaSinMochila.asignarRepartidor();
-        pedidoComidaSinMochila.asignarRepartidor("Ana Torres");
-        System.out.println();
-
-        PedidoEncomienda pedidoEncomiendaMalEmbalada = new PedidoEncomienda(5, "Av. Central 654", 25.0, false);
-        pedidoEncomiendaMalEmbalada.asignarRepartidor();
-        pedidoEncomiendaMalEmbalada.asignarRepartidor("Luis Vidal");
-        System.out.println();
-
-        PedidoExpress pedidoExpressSinDisponibilidad = new PedidoExpress(6, "Calle Nueva 987", 5.2, false);
-        pedidoExpressSinDisponibilidad.asignarRepartidor();
-        pedidoExpressSinDisponibilidad.asignarRepartidor("Pedro Gómez");
+        for (int i = 0; i < pedidos.length; i++) {
+            pedidos[i].asignarRepartidor();
+            pedidos[i].asignarRepartidor(repartidores[i]);
+            System.out.println();
+        }
     }
 }
